@@ -94,27 +94,31 @@
     går att göra betydligt bättre. Gör om så många som du kan hitta!
     */
   function presentStudents(students: Student[]) {
-    for (const student of students) {
+    const passedList = document.querySelector("ul#passedstudents");
+    const failedList = document.querySelector("ul#failedstudents");
+    
+    if (!passedList || !failedList) return;
+
+    const passedFragment = document.createDocumentFragment();
+    const failedFragment = document.createDocumentFragment();
+
+    students.forEach(student => {
+      const studentContainer = document.createElement("div");
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox"
+      checkbox.checked = student.handedInOnTime;
+
+      studentContainer.appendChild(checkbox)
+
       if (student.handedInOnTime) {
-        let container = document.createElement("div");
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = true;
-  
-        container.appendChild(checkbox);
-        let listOfStudents = document.querySelector("ul#passedstudents");
-        listOfStudents?.appendChild(container);
+        passedFragment.appendChild(studentContainer);
       } else {
-        let container = document.createElement("div");
-        let checkbox = document.createElement("input");
-        checkbox.type = "checkbox";
-        checkbox.checked = false;
-  
-        container.appendChild(checkbox);
-        let listOfStudents = document.querySelector("ul#failedstudents");
-        listOfStudents?.appendChild(container);
+        failedFragment.appendChild(studentContainer)
       }
-    }
+    });
+
+    passedList.appendChild(passedFragment);
+    failedList.appendChild(failedFragment);
   }
   
   /*
@@ -123,14 +127,7 @@
     Exemplet under löser problemet, men inte speciellt bra. Hur kan man göra istället?
     */
   function concatenateStrings() {
-    let result = "";
-    result += "Lorem";
-    result += "ipsum";
-    result += "dolor";
-    result += "sit";
-    result += "amet";
-  
-    return result;
+    return ["Lorem", "ipsum", "dolor", "sit", "amet"].join("");
   }
   
   /* 
@@ -139,23 +136,29 @@
       fler och fler parametrar behöver läggas till? T.ex. avatar eller adress. Hitta en bättre
       lösning som är hållbar och skalar bättre. 
   */
-  function createUser(
+
+  interface User {
     name: string,
     birthday: Date,
     email: string,
-    password: string
-  ) {
-    // Validation
+    password: string,
+    address: string
+  }
+
+  function createUser(user: User): string {
+    if (user.birthday > new Date()) {
+      return "Invald birthdate";
+    }
   
-    let ageDiff = Date.now() - birthday.getTime();
+    let ageDiff = Date.now() - user.birthday.getTime();
     let ageDate = new Date(ageDiff);
     let userAge = Math.abs(ageDate.getUTCFullYear() - 1970);
   
-    console.log(userAge);
-  
-    if (!(userAge < 20)) {
-      // Logik för att skapa en användare
-    } else {
-      return "Du är under 20 år";
-    }
+    if (userAge < 20) {
+      return "You need to be over 20 years old!";
   }
+  
+  console.log("User created:", user);
+
+  return "User created successfully!";
+}

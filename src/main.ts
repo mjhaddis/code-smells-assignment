@@ -11,7 +11,6 @@
     );
   }
 
-  console.log(getLength)
   
   /*
     2. I detta exempel har vi fokuserat på if-statements. Se om du kan göra exemplet bättre!

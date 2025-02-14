@@ -19,24 +19,17 @@
   class Student {
     constructor(
       public name: string,
-      public handedInOnTime: boolean,
-      public passed: boolean
+      public handedInOnTime: boolean
     ) {}
   }
   
   function getStudentStatus(student: Student): string {
-    student.passed =
-      student.name == "Sebastian"
-        ? student.handedInOnTime
-          ? true
-          : false
-        : false;
   
-    if (student.passed) {
-      return "VG";
-    } else {
-      return "IG";
+    if (student.name == "Michael") {
+      return student.handedInOnTime ? "VG" : "IG";
     }
+
+    return "IG";
   }
   
   /*

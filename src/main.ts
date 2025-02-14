@@ -37,22 +37,25 @@
     Det finns flera code smells att identifiera här. Vissa är lurigare än andra.
     */
   
-  class Temp {
-    constructor(public q: string, public where: Date, public v: number) {}
+  class TemperatureRecord {
+    constructor(public city: string, public timestamp: Date, public temperature: number) {}
   }
   
-  function averageWeeklyTemperature(heights: Temp[]) {
-    let r = 0;
+  function calcAvgWeeklyTemperature(tempRecordsLastWeek: TemperatureRecord[]) {
+    let totalTempLastWeek = 0;
   
-    for (let who = 0; who < heights.length; who++) {
-      if (heights[who].q === "Stockholm") {
-        if (heights[who].where.getTime() > Date.now() - 604800000) {
-          r += heights[who].v;
+    for (let recordIndex = 0; recordIndex < tempRecordsLastWeek.length; recordIndex++) {
+      const record = tempRecordsLastWeek[recordIndex]
+      const oneWeek = 604800000
+      
+      if (record.city === "Stockholm") {
+        if (record.timestamp.getTime() > Date.now() - oneWeek) {
+          totalTempLastWeek += record.temperature;
         }
       }
     }
   
-    return r / 7;
+    return totalTempLastWeek / 7;
   }
   
   /*

@@ -63,26 +63,29 @@
     Se om du kan göra det bättre. Inte bara presentationen räknas, även strukturer.
     */
   
-  function showProduct(
-    name: string,
-    price: number,
-    amount: number,
-    description: string,
-    image: string,
-    parent: HTMLElement
-  ) {
-    let container = document.createElement("div");
-    let title = document.createElement("h4");
-    let pris = document.createElement("strong");
-    let imageTag = document.createElement("img");
+   type Product {
+      name: string,
+      price: number,
+      amount: number,
+      description: string,
+      image: string,
+    };
+
+  function showProduct(product: Product,parent: HTMLElement)
+   {
+    const container = document.createElement("div");
+
+    const title = document.createElement("h4");
+    title.innerHTML = product.name
+    
+    const imageTag = document.createElement("img");
+    imageTag.src = product.image;
+    imageTag.alt = product.name;
+
+    const pris = document.createElement("strong");
+    pris.innerHTML = product.price.toString();
   
-    title.innerHTML = name;
-    pris.innerHTML = price.toString();
-    imageTag.src = image;
-  
-    container.appendChild(title);
-    container.appendChild(imageTag);
-    container.appendChild(pris);
+    container.append(title, imageTag, pris);
     parent.appendChild(container);
   }
   
